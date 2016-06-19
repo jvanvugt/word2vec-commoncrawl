@@ -1,19 +1,21 @@
 package com.jorisvanvugt.bigdata
 
-import nl.surfsara.warcutils.WarcInputFormat
-import org.jwat.warc.{WarcConstants, WarcRecord}
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat
+import java.util.Date
+
+import scalaj.http.Http
+
 import org.apache.hadoop.io.LongWritable;
 import org.apache.commons.lang.StringUtils;
 import org.apache.spark.{Logging, SparkConf, SparkContext}
 import org.apache.spark.mllib.feature.{Word2Vec, Word2VecModel}
+
 import org.jsoup.Jsoup
-import java.util.Date
-import java.text.SimpleDateFormat
-import scalaj.http.Http
+import org.jwat.warc.{WarcConstants, WarcRecord}
+
 import net.liftweb.json._
-
-
-import java.io.InputStreamReader;
+import nl.surfsara.warcutils.WarcInputFormat
 
 object WikiWord2Vec {
 
@@ -33,9 +35,7 @@ object WikiWord2Vec {
     println("Finding relevant files....")
     val files = getRelevantFiles
 
-    println("Parsing files...")
     val corpus = sc.union(files.map(filename =>
-
         sc.newAPIHadoopFile(
                       dataDirectory + filename,
                       classOf[WarcInputFormat],               // InputFormat
@@ -73,13 +73,8 @@ object WikiWord2Vec {
     } yield {filename}
   }
 
-  def tokenize(filename: String) = {
-    
-  }
-
   def getContent(record: WarcRecord):String = {
     val cLen = record.header.contentLength.toInt
-    //val cStream = record.getPayload.getInputStreamComplete()
     val cStream = record.getPayload.getInputStream()
     val content = new java.io.ByteArrayOutputStream()
 
