@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Wikipedia Word2Vec</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="container">
+        <h1>Wikipedia Word2Vec</h1>
+        <h2>Find synonyms</h2>
+        <div class="row">
+        <div class="col-md-6">
+             <form onsubmit="findSynonyms();return false;">
+                <div id="error-message"></div>
+                <div class="form-group">
+                <label for="word">Word</label>
+                <input type="text" id="word" class="form-control" value="man" required autofocus>
+                </div>
+                <button class="btn btn-primary" id="synonym-submit" type="submit">Find synonyms</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+             <table class="table table-striped" id="synonym-table">
+                <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Similarity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>woman</td>
+                    <td>0.6296310044075798</td>
+                </tr>
+                <tr>
+                    <td>nala</td>
+                    <td>0.6284322032756182</td>
+                </tr>
+                <tr>
+                    <td>timon</td>
+                    <td>0.6247338906743036</td>
+                </tr>
+                <tr>
+                    <td>mufasa</td>
+                    <td>0.6147327306206709</td>
+                </tr>
+                <tr>
+                    <td>megastar</td>
+                    <td>0.6088524830632691</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <h2>2D projection using t-SNE</h2>
+        <div class="col-md-12">
+            <div id="scatter"></div>
+        </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <script src="/static/app.js"></script>
+    </body>
+</html>
