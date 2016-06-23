@@ -39,6 +39,7 @@ object WikiWord2Vec {
     val dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss")
     println("Training word2vec model")
     val word2vec = new Word2Vec
+    word2vec.setMinCount(30)
     val model = word2vec.fit(corpus)
 
     println("Saving the model...")
