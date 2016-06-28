@@ -12,7 +12,9 @@ import edu.umd.cloud9.collection.wikipedia.language._
 object WikiWord2Vec {
 
   def tokenize(page: String): Seq[String] = {
-    page.split('\n')
+    page.split("\n")
+      .mkString(" ")
+      .split(" ")
       .map(_.toLowerCase.replaceAll("(^[^a-z]+|[^a-z]+$)", ""))
       .toSeq
   }
