@@ -2,6 +2,7 @@ package com.jorisvanvugt.bigdata
 
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.io._
 
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.mllib.feature.{Word2Vec, Word2VecModel}
@@ -43,7 +44,13 @@ object WikiWord2Vec {
     val model = word2vec.fit(corpus)
 
     println("Saving the model...")
-    model.save(sc, "models/test_" + dateFormat.format(new Date))
+    val pw = new PrintWriter(new File("word2vecmodel.csv" ))
+    val vectors = model.getVectors
+    pw.write("word," + (0 to 99).mkString(","))
+    for (word <- vectors) {
+      pw.write(word._1 + "," + word._2.mkString(",") + "\n")
+    }
+    pw.close
   }
 
 }
