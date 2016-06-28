@@ -39,14 +39,13 @@ object WikiWord2Vec {
 
     val corpus = articles.map{article => tokenize(article.getContent)}
 
-    val dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss")
     println("Training word2vec model")
     val word2vec = new Word2Vec
     word2vec.setMinCount(30)
     val model = word2vec.fit(corpus)
 
     println("Saving the model...")
-    val pw = new PrintWriter(new File("word2vecmodel.csv" ))
+    val pw = new PrintWriter(new File("word2vecmodel.csv"))
     val vectors = model.getVectors
     pw.write("word," + (0 to 99).mkString(","))
     for (word <- vectors) {
