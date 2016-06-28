@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.io._
 
+import org.apache.hadoop.io.LongWritable;
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.mllib.feature.{Word2Vec, Word2VecModel}
 import edu.umd.cloud9.collection.wikipedia._
@@ -24,6 +25,10 @@ object WikiWord2Vec {
     println("Setting up Spark Context...")
     val conf = new SparkConf()
       .setAppName("RUBigDataApp")
+      //.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+      //.set("spark.kryo.classesToRegister",
+      //   "org.apache.hadoop.io.LongWritable," + 
+      //   "info.bliki.extensions.scribunto.engine.lua.CompiledScriptCache")
     val sc = new SparkContext(conf)
 
     val filename = "hdfs:///data/public/wikipedia/enwiki/20140903/enwiki-20140903-pages-articles.xml.bz2"
@@ -31,13 +36,13 @@ object WikiWord2Vec {
     val file = sc.newAPIHadoopFile(filename,
       classOf[WikipediaPageInputFormat],
       classOf[LongWritable],
-      classOf[WikipediaPage]).repartition(100)
+      classOf[WikipediaPage])//.repartition(100)
 
-    val articlesWithContent = file.filter{_.isEmpty}.cache
+    val articles = file.filter{_._2.isEmpty}.cache
 
-    println("Nr of articles: " + articlesWithContent.count)
+    println("Nr of articles: " + articles.count)
 
-    val corpus = articles.map{article => tokenize(article.getContent)}
+    val corpus = articles.map{article => tokenize(article._2.getContent)}
 
     println("Training word2vec model")
     val word2vec = new Word2Vec
