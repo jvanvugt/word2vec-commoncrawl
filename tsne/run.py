@@ -25,7 +25,7 @@ def get_embeddings(X):
     return embedded
 
 def run():
-    data = pd.read_csv('word2vecmodel.csv', header=0, names=['word'] + list(range(100)))
+    data = pd.read_csv('word2vecmodel.csv', header=0, names=['word'] + list(range(300)))
     vectors = data.drop(['word'], axis=1).as_matrix()
 
     embedded = get_embeddings(vectors)
