@@ -9,8 +9,9 @@ class Word2VecModel():
     def __init__(self, vectors_file, embeddings_file):
         print('creating model...')
         vectors = pd.read_csv(vectors_file, header=0,
-            names=['word'] + list(range(100)))
+            names=['word'] + list(range(300)))
         words = vectors.word
+        print(words.head())
         # Save the vectors in a dictionary (word -> vector)
         self.vectors = {w: v for w, v in zip(words, vectors.drop(['word'], axis=1).as_matrix())}
     
@@ -30,7 +31,7 @@ class Word2VecModel():
             if word not in self.vectors:
                 return [word + ' not in vocabulary']
 
-        vector = np.zeros(100)
+        vector = np.zeros(300)
         vector += sum(map(lambda w: self.vectors[w], positive))
         vector -= sum(map(lambda w: self.vectors[w], negative))
 
